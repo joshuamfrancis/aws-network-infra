@@ -38,7 +38,7 @@ jobs:
         # # Indicates whether to delete to a failed change set. Default to '0' (will delete the failed changeset)
         # no-delete-failed-changeset: # optional, default is 0
         # # If the CloudFormation change set is empty, do not fail. Defaults to '0' (will fail on empty change set)
-        # no-fail-on-empty-changeset: # optional, default is 0
+        no-fail-on-empty-changeset: 1
         # # Disable rollback of the stack if stack creation fails. Defaults to '0' (will rollback if stack creation fails). This input is only used for stack creation, not for stack update
         # disable-rollback: # optional, default is 0
         # # The amount of time that can pass before the stack status becomes CREATE_FAILED. This input is only used for stack creation, not for stack update
