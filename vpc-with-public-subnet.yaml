@@ -85,7 +85,7 @@ Outputs:
     Export:
       Name: !Sub "${AWS::StackName}-VPCID"
 
-  VPC-CidrBlock:
+  VpcCidrBlock:
     Description: VPC ID
     Value: !GetAtt MyVPC.CidrBlock
     Export:
