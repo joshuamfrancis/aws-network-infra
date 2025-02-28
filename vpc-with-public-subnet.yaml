@@ -4,13 +4,22 @@ Description: 'CloudFormation template for VPC with one public subnet and Interne
 Parameters:
   CidrBlock:
     Type: String
-    Default: 10.0.0.0/16
+    Default: 10.1.0.0/16
+  SubNetCidrBlock:
+    Type: String
+    Default: 10.1.1.0/24
   VpcName:
     Type: String
     Default: MyVPC
   IgwName:
     Type: String
     Default: MyIGW
+  PublicSubnetName:
+    Type: String
+    Default: MyPublicSubnet
+  RouteTable:
+    Type: String
+    Default: MyPublicRouteTable
 
 Resources:
   MyVPC:
@@ -28,11 +37,11 @@ Resources:
     Properties:
       VpcId: !Ref MyVPC
       AvailabilityZone: !Select [0, !GetAZs '']
-      CidrBlock: 10.0.1.0/24
+      CidrBlock: !Ref SubNetCidrBlock
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: PublicSubnet
+          Value: !Ref PublicSubnetName
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -53,7 +62,7 @@ Resources:
       VpcId: !Ref MyVPC
       Tags:
         - Key: Name
-          Value: PublicRouteTable
+          Value: !Ref RouteTable
 
   PublicRoute:
     Type: AWS::EC2::Route
@@ -75,6 +84,12 @@ Outputs:
     Value: !Ref MyVPC
     Export:
       Name: !Sub "${AWS::StackName}-VPCID"
+
+  VPC-CidrBlock:
+    Description: VPC ID
+    Value: !GetAtt MyVPC.CidrBlock
+    Export:
+      Name: !Sub "${AWS::StackName}-VPC-CidrBlock"
 
   PublicSubnetId:
     Description: Public Subnet ID
